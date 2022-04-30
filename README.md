@@ -1,1 +1,1 @@
-# LeetCode-CSharp-solutions
+# LeetCode-CSharp-Solutions
