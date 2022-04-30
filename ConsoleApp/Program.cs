@@ -10,45 +10,7 @@
 
         //Console.WriteLine(MySqrt(2147395599));
     }
-    //MySqrt
-    public static int MySqrt(int x)
-    {
-        if (x == 0)
-        {
-            return 0;
-        }
-        if (x == 1 || x == 2 || x == 3)
-        {
-            return 1;
-        }
-        int l, r, s;
-        l = 0; r = x;
-        while (l <= r)
-        {
-
-            if (l == (r - 1))
-            {
-                return l;
-            }
-            else
-            {
-                s = l + ((r - l) / 2);
-                if (s * s < x)
-                {
-                    l = s;
-                }
-                else if (s * s > x)
-                {
-                    r = s;
-                }
-                else
-                {
-                    return s;
-                }
-            }
-        }
-        return l;
-    }
+    
     //FindMedianSortedArrays
     public static double FindMedianSortedArrays(int[] nums1, int[] nums2)
     {
