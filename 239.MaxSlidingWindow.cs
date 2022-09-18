@@ -4,7 +4,36 @@
 
 // Return the max sliding window.
 
-
+//Deque with List
+public class Solution {
+    public int[] MaxSlidingWindow(int[] nums, int k) {
+        int[] res = new int[nums.Length - k + 1];
+        List<int> max = new List<int>(); //use as Deque
+        for (int i = 0; i < k; i++)
+        {
+            while (max.Count > 0 && max.First() < nums[i])
+            {
+                max.RemoveAt(0); //popFirst
+            }
+            max.Add(nums[i]); //push
+        }
+        res[0] = max.First();
+        for (int i = k; i < nums.Length; i++)
+        {
+            if (max.Count > 0 && max.First() == nums[i - k]) //peekFirst
+                max.RemoveAt(0); //popFirst
+            while (max.Count > 0 && max.First() < nums[i]) //peekFirst
+            {
+                max.RemoveAt(0); //popFirst
+            }
+            while (max.Count > 0 && max.Last() < nums[i]) //peekLast
+                max.RemoveAt(max.Count-1); //popLast
+            max.Add(nums[i]); //push
+            res[i - k + 1] = max.First();
+        }
+        return res;
+    }
+}
 //c# incomplete solution.
 //need deque implementation
 public class Solution {
@@ -13,9 +42,9 @@ public class Solution {
         Deque<int> max = new Deque<int>();
         for (int i = 0; i < k; i++)
         {
-            if (max.Count > 0 && max.PeekFirst() < nums[i])
+            while (max.Count > 0 && max.PeekFirst() < nums[i])
             {
-                max.Clear();
+                max.PopFirst();
             }
             max.AddFirst(nums[i]);
         }
@@ -24,58 +53,15 @@ public class Solution {
         {
             if (max.Count > 0 && max.PeekFirst() == nums[i-k])
                 max.PopFirst();
-            if (max.Count > 0 && max.Peek() < nums[i])
+            while(max.Count > 0 && max.Peek() < nums[i])
             {
-                max.Clear();
+                max.PopFirst();
             }
             while(max.Count > 0 && max.PeekLast > nums[i])
                 max.PopLast();
-            max.Enqueue(nums[i]);
+            max.AddFirst(nums[i]);
             res[i-k+1] = max.PeekFirst();
         }
         return res;
     }
 }
-
-
-////c++ dequeue soln
-vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-    
-    vector <int> ans;
-    
-    deque<int> dq;
-    
-    int i=0,j=0;
-    
-    while(j<nums.size())
-    {
-        while(!dq.empty() && dq.back()<nums[j])
-        {
-            dq.pop_back();  //coz we dont need elemnt lesser than it in front of queue 
-            // to better understanding dry run on nums={1,3,1,2,0,5} & k=3
-        }
-        
-        dq.push_back(nums[j]);
-        
-        //if window size not achieved
-        if(j-i+1<k)
-        {
-            j++;
-        }
-        else
-        {
-           
-            ans.push_back(dq.front());
-            
-            //calculation for i
-            if(nums[i]==dq.front())
-            {
-                dq.pop_front();
-            }
-            
-            i++;
-            j++;
-        }
-    }
-    
-    return ans;
