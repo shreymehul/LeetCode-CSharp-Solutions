@@ -39,3 +39,25 @@ public class Solution
     }
 }
 
+
+public class Solution {
+    public ListNode RemoveElements(ListNode head, int val) {
+        if(head == null)
+            return head;
+        while(head.val == val){
+            if(head.next == null)
+                return null;
+            head = head.next;
+        }
+        ListNode curr = head.next;
+        ListNode prev = head;
+        while(prev != null && curr !=null){
+            if(curr.val == val)
+                prev.next = curr.next;
+            else
+                prev = curr;
+            curr = curr.next;
+        }
+        return head;
+    }
+}
