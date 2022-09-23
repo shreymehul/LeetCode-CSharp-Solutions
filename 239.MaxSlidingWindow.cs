@@ -12,9 +12,9 @@ public class Solution {
         for (int i = 0; i < k; i++)
         {
             while (max.Count > 0 && max.First() < nums[i])
-            {
                 max.RemoveAt(0); //popFirst
-            }
+            while (max.Count > 0 && max.Last() < nums[i])
+                    max.RemoveAt(max.Count - 1); //popLast
             max.Add(nums[i]); //push
         }
         res[0] = max.First();
@@ -23,9 +23,7 @@ public class Solution {
             if (max.Count > 0 && max.First() == nums[i - k]) //peekFirst
                 max.RemoveAt(0); //popFirst
             while (max.Count > 0 && max.First() < nums[i]) //peekFirst
-            {
                 max.RemoveAt(0); //popFirst
-            }
             while (max.Count > 0 && max.Last() < nums[i]) //peekLast
                 max.RemoveAt(max.Count-1); //popLast
             max.Add(nums[i]); //push
