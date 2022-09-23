@@ -4,7 +4,7 @@
 
 // Return the max sliding window.
 
-//Deque with List
+//Deque implementation via List
 public class Solution {
     public int[] MaxSlidingWindow(int[] nums, int k) {
         int[] res = new int[nums.Length - k + 1];
