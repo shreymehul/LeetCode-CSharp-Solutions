@@ -56,7 +56,8 @@
 // The parsed integer is 4193.
 // Since 4193 is in the range [-231, 231 - 1], the final result is 4193.
 
-public class Solution {
+//Faliling at IntMinpublic 
+class Solution {
     public int MyAtoi(string s) {
         long result = 0;
         bool isNegative = false;
@@ -77,7 +78,7 @@ public class Solution {
                 result = result * 10 + no;
                 if (result >= Int32.MaxValue)
                 {
-                    return isNegative? -2147483648 : 2147483647;
+                    return isNegative? Int32.MinValue : Int32.MaxValue;
                 }
             }
             else if (hasNoStart)
@@ -89,5 +90,39 @@ public class Solution {
         if (isNegative)
             result *= -1;
         return (int)result;
+    }
+}
+//Correct soln
+public class Solution {
+    public int MyAtoi(string s) {
+        if (s == null || s == string.Empty)
+            return 0;
+        
+        int res = 0,
+            sign = 1;
+        bool findSign = false,
+             findDigit = false;        
+        
+        foreach (var c in s)
+            if (!findSign && !findDigit && (c == '+' || c == '-'))
+            {
+                findSign = true;
+                sign = c == '+' ? 1 : -1;
+            }
+            else if (c >= '0' && c <= '9')
+            {
+                findDigit = true;
+                
+                if (res == 0 && c == '0')
+                    continue;
+                else if (res > Int32.MaxValue / 10 || (res == Int32.MaxValue / 10 && c - '0' > Int32.MaxValue % 10))
+                    return sign == 1 ? Int32.MaxValue : Int32.MinValue;
+                else
+                    res = res * 10 + (c - '0');
+            }
+            else if (c != ' ' || ((findDigit || findSign) && c == ' ') || (findDigit && c == '.'))
+                break;
+        
+        return res * sign;
     }
 }
