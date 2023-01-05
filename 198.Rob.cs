@@ -54,7 +54,6 @@ public class Solution {
 public class Solution {
     public int Rob(int[] nums) {
         int[] dp = new int[nums.Length];
-        Array.Fill(dp,-1);
         if(nums.Length == 1)
             return nums[0];
         if(nums.Length == 2)
