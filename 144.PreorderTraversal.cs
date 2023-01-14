@@ -38,3 +38,19 @@ public class Solution {
             Preorder(root.right, result);
     }
 }
+
+
+public class Solution {
+    public IList<int> PreorderTraversal(TreeNode root) {
+        IList<int> res = new List<int>();
+        Preorder(root, res);
+        return res;
+    }
+    public void Preorder(TreeNode root, IList<int> res){
+        if(root == null)
+            return;
+        res.Add(root.val);
+        Preorder(root.left, res);
+        Preorder(root.right, res);
+    }
+}
