@@ -21,3 +21,18 @@ public class Solution
         return max;
     }
 }
+
+public class Solution {
+    public int FindMaxConsecutiveOnes(int[] nums) {
+        int max = 0, lmax = 0;
+        foreach(int num in nums){
+            if(num == 0){
+                max = Math.Max(max,lmax);
+                lmax = 0;
+            }
+            else
+                lmax++;
+        }
+        return Math.Max(max,lmax);
+    }
+}
