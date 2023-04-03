@@ -1,6 +1,7 @@
 // 53. Maximum Subarray
 
-// Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+// Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and 
+// return its sum.
 
 // A subarray is a contiguous part of an array.
 // Example 1:
@@ -25,8 +26,8 @@ public class Solution {
         
         for(int i = 0; i < nums.Length; i++){
             maxTillHere += nums[i];
-            max = maxTillHere > max ? maxTillHere : max;
-            maxTillHere = maxTillHere > 0 ? maxTillHere : 0; //Add untill number is still positive
+            max = Math.Max(maxTillHere, max);
+            maxTillHere = Math.Max(maxTillHere, 0); //Add untill number is still positive
         }
         return max;
     }

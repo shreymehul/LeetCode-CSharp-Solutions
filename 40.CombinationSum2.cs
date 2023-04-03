@@ -1,5 +1,6 @@
 // 40. Combination Sum II
-// Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+// Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in 
+// candidates where the candidate numbers sum to target.
 // Each number in candidates may only be used once in the combination.
 // Note: The solution set must not contain duplicate combinations.
 // Example 1:
@@ -37,8 +38,7 @@ public class Solution {
                 continue;
             if(target >= candidates[i]){
                 list.Add(candidates[i]);
-                FindCombination(candidates, target - candidates[i],
-                            i+1,list,result);
+                FindCombination(candidates, target - candidates[i],i+1,list,result);
                 list.RemoveAt(list.Count - 1);
             }
         }
