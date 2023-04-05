@@ -31,3 +31,22 @@ public class Solution {
         return count;
     }
 }
+
+public class Solution {
+    public int CountPrimes(int n) {
+        if (n < 3) return n-1;
+        int[] isNotPrime = new int[n];
+        int count = 1; // count 2 as a prime
+        for (int i = 3; i < n; i += 2) {
+            if (isNotPrime[i] == 0) {
+                count++;
+                if ((long)i * i < n) {
+                    for (int j = i * i; j < n; j += 2 * i) {
+                        isNotPrime[j] = 1;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+}

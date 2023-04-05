@@ -14,7 +14,7 @@ public class Solution {
             }
             else if(maj2 == nums[i]){
                 count2++;
-            } 
+            }
             else if(count1 == 0)
             {
                 maj1 = nums[i];
