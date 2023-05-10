@@ -41,7 +41,7 @@ public class Solution : GuessGame {
             }
             else if (res == -1 )  
             {
-                 high = mid -1;
+                high = mid -1;
             }
             else if(res == 1) 
             {

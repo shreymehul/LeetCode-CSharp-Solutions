@@ -6,10 +6,7 @@
 
 // You must solve the problem without modifying the array nums and uses only constant extra space.
 
- 
-
 // Example 1:
-
 // Input: nums = [1,3,4,2,2]
 // Output: 2
 
