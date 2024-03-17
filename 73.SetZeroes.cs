@@ -30,3 +30,34 @@ public class Solution {
         }
     }
 }
+
+
+
+public class Solution {
+    public void SetZeroes(int[][] matrix) {
+        bool[] row = new bool[matrix.Length];
+        bool[] col = new bool[matrix[0].Length];
+        for(int i = 0; i < matrix.Length; i++){
+            for(int j = 0; j < matrix[i].Length; j++){
+                if(matrix[i][j] == 0){
+                    row[i] = true;
+                    col[j] = true;
+                }
+            }
+        }
+        for(int i = 0; i < matrix.Length; i++){
+            if(row[i]){
+                for(int j = 0; j < matrix[i].Length; j++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        for(int j = 0; j < matrix[0].Length; j++){
+            if(col[j]){
+                for(int i = 0; i < matrix.Length; i++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+}

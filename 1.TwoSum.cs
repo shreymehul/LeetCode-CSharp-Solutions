@@ -32,18 +32,15 @@ public class Solution
 //HashMap O(n)
 public class Solution {
     public int[] TwoSum(int[] nums, int target) {
-        int[] result = new int[2];
-        Dictionary<int,int> map = new Dictionary<int,int>();
+        Dictionary<int,int> hm = new Dictionary<int,int>();
         for(int i = 0; i < nums.Length; i++){
-            if(map.ContainsKey(target - nums[i])){
-                result[0] = map[target - nums[i]];
-                result[1] = i;
-                break;
+            //If the difference is present in the hashmap, return the indices
+            if(hm.ContainsKey(target - nums[i])){
+                return new int[]{hm[target - nums[i]],i};
             }
-            else{
-                map[nums[i]] = i;
-            }
+            else
+                hm[nums[i]] = i;
         }
-        return result;
+        return new int[2];
     }
 }

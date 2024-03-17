@@ -30,20 +30,28 @@ public class Solution {
             return 1;
         if(i >= m || j>= n)
             return 0;
+        //count path from adjacent cells
         return CountUniquePath(i+1,j,m,n) + CountUniquePath(i,j+1,m,n);
     }
 }
 //with DP
+
 public class Solution {
-    int[,] dp = new int[100,100];
+    int[,] dp;
     public int UniquePaths(int m, int n) {
+        dp = new int[m,n];
         return CountUniquePath(0,0,m,n);
     }
-    public int CountUniquePath(int i, int j, int m, int n ){
-        if(i == m-1 && j == n-1)
-            return 1;
-        if(i >= m || j>= n)
+    public int CountUniquePath(int i, int j, int m, int n){
+        
+        if(i >= m || j >= n){
             return 0;
+        }
+        //if we reach the bottom right corner
+        if(i == m-1 && j == n-1){
+            return 1;
+        }
+        //calculate the number of unique paths to adjacent cells
         if(dp[i,j] == 0)
             dp[i,j] = CountUniquePath(i+1,j,m,n) + CountUniquePath(i,j+1,m,n);
         return dp[i,j];

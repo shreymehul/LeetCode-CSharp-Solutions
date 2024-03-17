@@ -26,6 +26,38 @@
 
 public class Solution {
     public void NextPermutation(int[] nums) {
+        int idx1, idx2 = -1;
+
+        //Find first index from the right that is less than the next index
+        for (idx1 = nums.Length - 2; idx1 >= 0; idx1--) {
+            if (nums[idx1] < nums[idx1 + 1]) {
+                break;
+            }
+        }
+
+        //If no such index is found, reverse the array and return
+        if (idx1 < 0) {
+            Array.Reverse(nums);
+            return;
+        }
+        //Find the next index from the right that is greater than the first index
+        for (int i = nums.Length - 1; i >= 0; i--) {
+            if (nums[i] > nums[idx1]) {
+                idx2 = i;
+                break;
+            }
+        }
+
+        //Swap the two indices
+        (nums[idx1], nums[idx2]) = (nums[idx2], nums[idx1]);
+
+        //Reverse the array from the first index
+        Array.Reverse(nums, idx1 + 1, nums.Length - idx1 - 1);
+    }
+}
+
+public class Solution {
+    public void NextPermutation(int[] nums) {
         int idx1 = -1;
             int n = nums.Length;
             for (int i = n - 1; i > 0; i--)

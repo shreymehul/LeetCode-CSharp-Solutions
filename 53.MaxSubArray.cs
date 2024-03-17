@@ -34,6 +34,23 @@ public class Solution {
 }
 
 
+public class Solution {
+    public int MaxSubArray(int[] nums) {
+        int max = nums[0], sum = nums[0];
+        //Intuition: Add the current number to the sum till its positive and upudate the maximum sum
+        for(int i = 1; i < nums.Length; i++){
+            //If the sum is negative, reset it to 0
+            if(sum < 0)
+                sum = 0;
+            //Add the current number to the sum
+            sum += nums[i];
+            //Update the maximum sum
+            max = Math.Max(max, sum);
+        }
+        return max;
+    }
+}
+
 //prefixsum array
 public class Solution {
     public int MaxSubArray(int[] nums) {
@@ -41,6 +58,7 @@ public class Solution {
         prefixsum[0] = 0;
         
         for(int i = 0; i < nums.Length; i++){
+            
            prefixsum[i+1] = prefixsum[i] + nums[i]; 
         }
         

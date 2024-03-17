@@ -38,20 +38,25 @@ public class Solution {
     }
 }
 //Time O(n,m) Space O(1)
-public void Merge(int[] nums1, int m, int[] nums2, int n) {
-    int i = m - 1;
-    int j = n - 1;
-    int k = m + n - 1;
-    
-    while(i >= 0 && j >= 0) {
-        if(nums1[i] > nums2[j]) {
-            nums1[k--] = nums1[i--];
-        } else {
-            nums1[k--] = nums2[j--];
+
+public class Solution {
+    public void Merge(int[] nums1, int m, int[] nums2, int n) {
+        if(n == 0)
+            return;
+        //Start from the end of the arrays
+        int i = m-1, j = n -1, pos = m+n-1;
+        while(i >= 0 && j >= 0){
+            //if the element in nums1 is greater than the element in nums2, put it in the last position
+            if(nums1[i] > nums2[j])
+                nums1[pos] = nums1[i--];
+            //else put the element from nums2 in the last position
+            else
+                nums1[pos] = nums2[j--];
+            pos--;
         }
-    }
-    
-    while(j >= 0) {
-        nums1[k--] = nums2[j--];
+        //If there are still elements in nums2, put them in the array
+        while(j >= 0){
+            nums1[pos--] = nums2[j--];
+        }
     }
 }
