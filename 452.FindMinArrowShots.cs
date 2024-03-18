@@ -24,6 +24,11 @@
 // -231 <= xstart < xend <= 231 - 1
 
 
+//The intuition behind the solution is to sort the intervals (balloons) by their end points. 
+// Then, iterate through the sorted list and shoot an arrow at the end point of the current balloon. 
+// This arrow will also burst all other balloons whose start point is less than or equal to the current
+// balloon's end point. 
+// This is because the sorted order ensures that all such balloons will overlap with the current balloon.
 public class Solution {
     public int FindMinArrowShots(int[][] points) {
         points = points.OrderBy(x => x[1]).ThenBy(x => x[0]).ToArray();
