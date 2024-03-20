@@ -44,3 +44,20 @@ public class Solution {
             && CheckBST(root.right, root.val, max);
     }
 }
+
+public class Solution {
+    
+    public bool IsValidBST(TreeNode root) {
+        return IsValidBST(root, Int64.MinValue, Int64.MaxValue);
+    }
+    //Current node should be in the range of min and max. 
+    //Where current root will be the max for left subtree and min for right subtree
+    public bool IsValidBST(TreeNode root, long min, long max){
+        if(root == null)
+            return true;
+        if(root.val >= max || root.val <= min)
+            return false;
+        return IsValidBST(root.left, min, root.val) &&
+            IsValidBST(root.right, root.val, max);
+    }
+}

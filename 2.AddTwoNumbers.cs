@@ -15,8 +15,18 @@
  */
 public class Solution
 {
+    //Intuition: We can solve this problem using two pointers.
+    //We can iterate through both the lists and add the values of the nodes.
+    //We can keep track of the carry and add it to the next node.
+    //If the sum is greater than 9, we can take the remainder and set the carry to 1.
+    //If the sum is less than 9, we can set the carry to 0.
+    //If we reach the end of the list and there is still a carry, we can add a new node with the value 1.
+    //Finally, we can return the head of the list.
+    //Time complexity: O(n)
+    //Space complexity: O(1)
     public ListNode AddTwoNumbers(ListNode list1, ListNode list2)
     {
+        
         ListNode head, curr, prev;
         if (list1 == null && list2 == null)
             return null;

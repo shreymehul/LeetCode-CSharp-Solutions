@@ -11,7 +11,9 @@ public class Solution
             return "";
         if (size == 1)
             return strs[0];
-
+        //Sort the array of strings
+        //The first and last strings will be the smallest and largest strings
+        //We can compare the first and last strings to find the longest common prefix
         Array.Sort(strs);
         int end = Math.Min(strs[0].Length, strs[size - 1].Length);
         int i = 0;

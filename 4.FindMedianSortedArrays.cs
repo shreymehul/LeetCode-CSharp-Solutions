@@ -1,23 +1,24 @@
 // 4. Median of Two Sorted Arrays
 
-// Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
-
+// Given two sorted arrays nums1 and nums2 of size m and n respectively, 
+// return the median of the two sorted arrays.
 // The overall run time complexity should be O(log (m+n)).
 
- 
-
 // Example 1:
-
 // Input: nums1 = [1,3], nums2 = [2]
 // Output: 2.00000
 // Explanation: merged array = [1,2,3] and median is 2.
 // Example 2:
-
 // Input: nums1 = [1,2], nums2 = [3,4]
 // Output: 2.50000
 // Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
 
 public class Solution {
+    //Intuition: We can solve this problem by merging the two arrays and finding the median.
+    //We can create a new array and merge the two arrays.
+    //We can find the median of the merged array and return it.
+    //Time complexity: O(n)
+    //Space complexity: O(n)
     public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
         int[] merge = new int[nums1.Length + nums2.Length];
         int p1=0, p2=0;
@@ -40,5 +41,77 @@ public class Solution {
             result = ((double)merge[merge.Length / 2]+ 
                       (double)merge[(merge.Length / 2)-1])/2;
         return result;
+    }
+}
+
+
+public class Solution {
+    //intuition: We can solve this problem by finding the kth element in the merged array.
+    public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
+        int len = nums1.Length + nums2.Length;
+        //If the length of the merged array is odd, we can find the median by finding the (len/2)th element.
+        if (len % 2 != 0)
+            return FindMedianOdd(nums1, nums2, len);
+        //If the length of the merged array is even, we can find the median by finding the (len/2)th and (len/2+1)th element.
+        else
+            return FindMedianEven(nums1, nums2, len);
+    }
+
+    public double FindMedianOdd(int[] nums1, int[] nums2, int len) {
+        int x = 0, y = 0, i = 0;
+        double res = 0;
+        //We can find the (len/2)th element by iterating through the merged array.
+        while (i <= len / 2) {
+            //We can find the (len/2)th element by finding the minimum of the two arrays.
+            if (x < nums1.Length && y < nums2.Length) {
+                if (nums1[x] <= nums2[y]) {
+                    res = nums1[x];
+                    x++;
+                } else {
+                    res = nums2[y];
+                    y++;
+                }
+            } else if (x < nums1.Length) {
+                res = nums1[x];
+                x++;
+            } else if (y < nums2.Length) {
+                res = nums2[y];
+                y++;
+            }
+            i++;
+        }
+        return res;
+    }
+
+    public double FindMedianEven(int[] nums1, int[] nums2, int len) {
+        //We can find the (len/2)th and (len/2+1)th element by finding the minimum of the two arrays.
+        double median1 = FindKthElement(nums1, 0, nums2, 0, len / 2);
+        double median2 = FindKthElement(nums1, 0, nums2, 0, len / 2 + 1);
+        return (median1 + median2) / 2.0;
+    }
+
+    private double FindKthElement(int[] nums1, int start1, int[] nums2, int start2, int k) {
+        //If the first array is empty, we can return the kth element of the second array.
+        if (start1 >= nums1.Length) return nums2[start2 + k - 1];
+        //If the second array is empty, we can return the kth element of the first array.
+        if (start2 >= nums2.Length) return nums1[start1 + k - 1];
+        //If k is 1, we can return the minimum of the two arrays.
+        if (k == 1) return Math.Min(nums1[start1], nums2[start2]);
+
+        //We can find the kth element by finding the minimum of the two arrays.
+        //We can find the mid element of the two arrays.
+        //We can compare the mid element of the two arrays.
+        //We can find the k/2th element of the two arrays.
+        //We can find the k-k/2th element of the two arrays.
+        //We can find the minimum of the two elements.
+        int mid1 = start1 + k / 2 - 1 < nums1.Length ? nums1[start1 + k / 2 - 1] : int.MaxValue;
+        int mid2 = start2 + k / 2 - 1 < nums2.Length ? nums2[start2 + k / 2 - 1] : int.MaxValue;
+
+        //We can compare the mid element of the two arrays.
+        if (mid1 < mid2) {
+            return FindKthElement(nums1, start1 + k / 2, nums2, start2, k - k / 2);
+        } else {
+            return FindKthElement(nums1, start1, nums2, start2 + k / 2, k - k / 2);
+        }
     }
 }

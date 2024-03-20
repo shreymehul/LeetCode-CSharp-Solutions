@@ -14,6 +14,7 @@
  */
 public class Solution
 {
+    //intuio
     public ListNode SwapPairs(ListNode head)
     {
         ListNode prev, curr;
@@ -25,6 +26,7 @@ public class Solution
         head = head.next;
         while (curr != null && curr.next != null)
         {
+            //swap
             prev.next = curr.next;
             prev = curr;
             curr = curr.next;

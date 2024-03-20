@@ -34,3 +34,24 @@ public class Solution {
         }
     }
 }
+
+public class Solution {
+    //Intuition: Transpose and then reverse each row as we are rotating clockwise 
+    //so we need to reverse each row after transpose to get the result. 
+    public void Rotate(int[][] matrix) {
+        //Transpose: (i,j) -> (j,i)
+        for(int i = 0; i < matrix.Length; i++){
+            for(int j = 0; j < i; j++){
+                if(i != j)
+                    (matrix[i][j], matrix[j][i]) = (matrix[j][i], matrix[i][j]);
+            }
+        }
+        //Reverse each row beacuse of clockwise rotation
+        for(int i = 0; i < matrix.Length; i++){
+            for(int j = 0; j < matrix.Length/2; j++){
+                (matrix[i][j], matrix[i][matrix.Length - j - 1]) = 
+                (matrix[i][matrix.Length - j - 1], matrix[i][j]);
+            }
+        }
+    }
+}
