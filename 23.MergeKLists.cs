@@ -31,9 +31,12 @@ public class Solution {
         return MergeSort(lists, 0, lists.Length-1);
     }
     public ListNode MergeSort(ListNode[] lists, int low, int high){
+        //Base case if there is only one list left to merge return it.
         if(low == high)
             return lists[low];
+        //Find the mid point of the lists to divide the lists into two parts.
         int mid = (high-low)/2 + low;
+        //Divide and Conqure to merge the lists using Merge Sort
         ListNode left = MergeSort(lists, low, mid),
             right = MergeSort(lists, mid+1, high);
         return Merge(left, right);
@@ -42,6 +45,7 @@ public class Solution {
         ListNode head = new ListNode();
         ListNode curr = head;
         
+        //Merge the lists in ascending order and return the head of the merged list.
         while(l1 != null && l2 != null){
             if(l1.val <= l2.val){
                 curr.next = l1;

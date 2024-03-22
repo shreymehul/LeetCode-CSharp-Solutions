@@ -24,15 +24,22 @@ public class Solution {
         int[] X = new int[]{1,-1,0,0};
         int[] Y = new int[]{0,0,1,-1};
         Queue<(int,int)> queue = new Queue<(int,int)>();
+
+        // Step 1: put the position of all rotten oranges in queue,
+        // then count the number of fresh oranges
         for(int i = 0; i < grid.Length; i++){
             for(int j = 0; j < grid[0].Length; j++){
+                // put the position of all rotten oranges in queue
                 if(grid[i][j] == 2)
                     queue.Enqueue((i,j));
+                // count the number of fresh oranges
                 else if(grid[i][j] == 1)
                     countFresh++;
             }
         }
+        // return 0 if no fresh orange left
         if(countFresh == 0) return 0;
+        // Step 2: start the rotting process via BFS
         while(queue.Count > 0){
             ++time;
             int size = queue.Count();
@@ -42,18 +49,63 @@ public class Solution {
                     if(!IsValid(grid,X[i]+x,Y[i]+y))
                         continue;
                     grid[X[i]+x][Y[i]+y] = 2;
+                    // This orange would be contaminated next round
                     queue.Enqueue((X[i]+x,Y[i]+y));
+                    // decrease the count of fresh oranges
                     countFresh--;
                 }
                 size--;
             }
         }
-        
+        // return round if no fresh orange left
         return countFresh == 0 ? time-1 : -1;
     }
     public bool IsValid(int[][]grid, int row, int col){
         if(row < 0 || col < 0 || row >= grid.Length || col >= grid[0].Length
           || grid[row][col] == 0 || grid[row][col] == 2)
+            return false;
+        return true;
+    }
+}
+
+
+
+
+public class Solution {
+    public int OrangesRotting(int[][] grid) {
+        int time = 0;
+        int countFresh = 0;
+        Queue<(int,int)> queue = new();
+        for(int i = 0; i < grid.Length; i++){
+            for(int j = 0; j < grid[0].Length; j++){
+                if(grid[i][j] == 2)
+                    queue.Enqueue((i,j));
+                else if(grid[i][j] == 1)
+                    countFresh++;
+            }
+        }
+        if(countFresh == 0) return 0;
+        int[,] dir = new int[,]{{1,0},{0,1},{-1,0},{0,-1}};
+        while(queue.Count() > 0){
+            time++;
+            int size = queue.Count();
+            while(size > 0){
+                var (x,y) = queue.Dequeue();
+                for(int i = 0; i < 4; i++){
+                    int dx = x + dir[i,0], dy = y + dir[i,1];
+                    if(IsValid(grid,dx,dy)){
+                        grid[dx][dy] = 2;
+                        queue.Enqueue((dx,dy));
+                        countFresh--;
+                    }
+                }
+                size--;
+            }
+        }
+        return countFresh != 0 ? -1 : time - 1;
+    }
+    public bool IsValid(int[][] grid, int x, int y){
+        if(x < 0 || y < 0 || x >= grid.Length || y >= grid[0].Length || grid[x][y] != 1)
             return false;
         return true;
     }
