@@ -28,3 +28,23 @@ public class Solution {
         return result;
     }
 }
+
+public class Solution {
+    public IList<int> FindDuplicates(int[] nums) {
+        //intuution: we can use the array itself to mark the visited elements
+        // we can use the index of the array to mark the visited elements
+        // we can use the negative sign to mark the visited elements
+        // if we see the element again, we can add it to the result
+        // we can use the absolute value of the element to get the index
+        IList<int> Duplicates = new List<int>();
+
+        for(int i = 0; i < nums.Length; i++){
+            int idx = Math.Abs(nums[i]) - 1;
+            if(nums[idx] < 0)
+                Duplicates.Add(idx + 1);
+            else
+                nums[idx] = -nums[idx];
+        }
+        return Duplicates;
+    }
+}
