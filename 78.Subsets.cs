@@ -29,3 +29,21 @@ public class Solution {
         return result;
     }
 }
+
+public class Solution {
+    public IList<IList<int>> Subsets(int[] nums) {
+        IList<IList<int>> result = new List<IList<int>>();
+        Subsets(nums, 0, result, new List<int>());
+        return result;
+    }
+    private void Subsets(int[] nums, int itr, IList<IList<int>> result, IList<int> set){
+        if(itr == nums.Length){
+            result.Add(new List<int>(set));
+            return;
+        }
+        Subsets(nums, itr+1, result, set);
+        set.Add(nums[itr]);
+        Subsets(nums, itr+1, result, set);
+        set.RemoveAt(set.Count -1);
+    }
+}
