@@ -8,6 +8,9 @@
 // Output: 6
 // Explanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.
 
+
+//Prefix Sum
+//Space O(n) Time O(n)
 public class Solution {
     public int Trap(int[] height) {
         int[] maxleft = new int[height.Length];
@@ -25,5 +28,53 @@ public class Solution {
             res += Math.Min(maxleft[i],maxright[i]) - height[i];
         }
         return res;
+    }
+}
+
+//Two pointer
+//Space O(1) Time O(n)
+public class Solution {
+    public int Trap(int[] height) {
+        int leftMax = height[0], rightMax = height[^1];
+        int left = 0, right = height.Length -1;
+        int water = 0;
+        while(left < right){
+            if(leftMax < rightMax){
+                water += leftMax - height[left];
+                left++;
+                leftMax = Math.Max(leftMax, height[left]);
+            }
+            else{
+                water += rightMax - height[right];
+                right--;
+                rightMax = Math.Max(rightMax, height[right]);
+            }
+        }
+        return water;
+    }
+}
+
+public class Solution {
+    public int Trap(int[] height) {
+        int leftMax = 0, rightMax = 0;
+        int left = 0, right = height.Length -1;
+        int water = 0;
+        while(left < right){
+            if(height[left] < height[right]){
+                if(leftMax > height[left])
+                    water += leftMax - height[left];
+                else
+                    leftMax = height[left];
+                left++;
+            }
+            else{
+                if(rightMax > height[right])
+                    water += rightMax - height[right];
+                else
+                    rightMax = height[right];
+                right--;
+            }
+        }
+        return water;
     }
 }
