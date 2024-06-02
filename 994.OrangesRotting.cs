@@ -73,36 +73,43 @@ public class Solution {
 
 public class Solution {
     public int OrangesRotting(int[][] grid) {
-        int time = 0;
         int countFresh = 0;
-        Queue<(int,int)> queue = new();
+        Queue<(int,int)> rottenOrange = new();
+
         for(int i = 0; i < grid.Length; i++){
             for(int j = 0; j < grid[0].Length; j++){
                 if(grid[i][j] == 2)
-                    queue.Enqueue((i,j));
+                    rottenOrange.Enqueue((i,j));
                 else if(grid[i][j] == 1)
                     countFresh++;
             }
         }
+
         if(countFresh == 0) return 0;
+
+        int minutes = 0;
         int[,] dir = new int[,]{{1,0},{0,1},{-1,0},{0,-1}};
-        while(queue.Count() > 0){
-            time++;
-            int size = queue.Count();
+
+        while(rottenOrange.Any()){
+            minutes++;
+            int size = rottenOrange.Count();
+
             while(size > 0){
-                var (x,y) = queue.Dequeue();
+                var (x,y) = rottenOrange.Dequeue();
                 for(int i = 0; i < 4; i++){
-                    int dx = x + dir[i,0], dy = y + dir[i,1];
+                    int dx = x + dir[i,0], 
+                        dy = y + dir[i,1];
                     if(IsValid(grid,dx,dy)){
                         grid[dx][dy] = 2;
-                        queue.Enqueue((dx,dy));
+                        rottenOrange.Enqueue((dx,dy));
                         countFresh--;
                     }
                 }
                 size--;
             }
+            
         }
-        return countFresh != 0 ? -1 : time - 1;
+        return countFresh != 0 ? -1 : minutes - 1;
     }
     public bool IsValid(int[][] grid, int x, int y){
         if(x < 0 || y < 0 || x >= grid.Length || y >= grid[0].Length || grid[x][y] != 1)
