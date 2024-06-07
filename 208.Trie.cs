@@ -29,6 +29,50 @@
 // word and prefix consist only of lowercase English letters.
 // At most 3 * 104 calls in total will be made to insert, search, and startsWith.
 
+//cleaner as per question
+public class Trie {
+    Trie[] child;
+    bool isEnd;
+    public Trie() {
+        child = new Trie[26];
+        isEnd = false;
+    }
+    
+    public void Insert(string word) {
+        Trie node = this;
+        foreach(char ch in word){
+            if(node.child[ch - 'a'] == null){
+                node.child[ch - 'a'] = new Trie();
+            }
+            node = node.child[ch - 'a'];
+        }
+        node.isEnd = true;
+    }
+    
+    public bool Search(string word) {
+        Trie node = this;
+        foreach(char ch in word){
+            if(node.child[ch - 'a'] == null)
+                return false;
+            else
+                node = node.child[ch -'a'];
+        }
+        return node.isEnd ;
+    }
+    
+    public bool StartsWith(string prefix) {
+        Trie node = this;
+        foreach(char ch in prefix){
+            if(node.child[ch - 'a'] == null)
+                return false;
+            else
+                node = node.child[ch -'a'];
+        }
+        return true ;
+    }
+}
+
+//standard
 public class Trie {
     //Time complexity: O(n) where n is the length of the word
     //Space complexity: O(1)
