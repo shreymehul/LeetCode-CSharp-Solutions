@@ -29,6 +29,18 @@
 // buildDict will be called only once before search.
 // At most 100 calls will be made to search.
 
+//-----------------
+// Explanation:
+//-----------------
+// Initialization: The MagicDictionary class initializes an array children of size 26 to store references to its child nodes, representing each letter of the alphabet.
+// BuildDict Method: This method constructs the trie by iterating through each word and its characters. Each character is placed at its corresponding position in the children array.
+// Search Method: The public Search method calls a helper method SearchHelper, which performs the recursive search.
+// SearchHelper Method: This helper method recursively traverses the trie:
+// If the current character exists in the children, it continues to the next character without modifying the flag.
+// If a modification hasn't been made yet, it tries replacing the current character with each possible letter (one at a time) and continues the search with the modified flag set to true.
+// If the end of the word is reached, it checks if exactly one modification was made and the node represents the end of a word.
+
+
 public class MagicDictionary {
     private MagicDictionary[] children;
     private bool isEnd;

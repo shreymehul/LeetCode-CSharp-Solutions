@@ -44,6 +44,48 @@
 // 0 <= value <= 109
 // At most 2 * 105 calls will be made to get and put.
 
+
+//---------------
+// EXPLANATION
+//---------------
+// Data Structures:
+
+// mapLeastFrequent: Maps each key to its value and frequency.
+// mapLeastRecent: Maps each frequency to a linked list of keys with that frequency.
+// keyNodeMap: Maps each key to its corresponding node in the frequency list, enabling O(1) removal.
+// Constructor:
+
+// Initializes the cache with the given capacity and sets up the data structures.
+// Get Method:
+
+// Checks if the key exists.
+// If it exists, updates its frequency and returns its value.
+// If it doesn't exist, returns -1.
+// Put Method:
+
+// Handles the insertion of a new key-value pair.
+// If the cache is full, it removes the least frequently used key.
+// Inserts the new key with an initial frequency of 1.
+// Update Method:
+
+// Increments the frequency of an existing key.
+// Moves the key from its current frequency list to the next frequency list.
+// Updates the least frequency if necessary.
+// Insert Method:
+
+// Adds a new key or updates an existing key with a given frequency.
+// Ensures the frequency list is updated accordingly.
+// Remove Method:
+
+// Removes the least frequently used key from the cache.
+// Updates the data structures to reflect the removal.
+// Complexity:
+// Time Complexity:
+// Get: O(1), as it involves dictionary lookups and updates.
+// Put: O(1), as it involves dictionary lookups, insertions, and removals.
+// Space Complexity:
+// O(n), where n is the capacity of the cache, as we store up to n key-value pairs and their frequencies.
+
 using System;
 using System.Collections.Generic;
 
