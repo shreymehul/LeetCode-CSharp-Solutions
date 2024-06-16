@@ -67,3 +67,56 @@ public class Solution {
         }
     }
 }
+
+//Dutch National Flag
+public class Solution {
+    public void SortColors(int[] nums) {
+        // Initialize pointers
+        int low = 0;  // Pointer for the next position of 0
+        int mid = 0;  // Pointer for the current element
+        int high = nums.Length - 1;  // Pointer for the next position of 2
+
+        // Iterate through the array
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                // Swap the current element with the element at low pointer
+                // Move both low and mid pointers forward
+                (nums[mid], nums[low]) = (nums[low], nums[mid]);
+                low++;
+                mid++;
+            }
+            else if (nums[mid] == 2) {
+                // Swap the current element with the element at high pointer
+                // Move the high pointer backward
+                // Do not move mid pointer forward as the element swapped to mid needs to be checked
+                (nums[mid], nums[high]) = (nums[high], nums[mid]);
+                high--;
+            }
+            else {
+                // If the element is 1, just move the mid pointer forward
+                mid++;
+            }
+        }
+    }
+}
+
+// Detailed Explanation:
+// Initialization:
+
+// low is initialized to 0. It keeps track of where the next 0 should go.
+// mid is initialized to 0. It is the current element being examined.
+// high is initialized to the last index of the array. It keeps track of where the next 2 should go.
+// Loop Condition:
+
+// The loop runs while mid is less than or equal to high. This ensures that all elements are processed.
+// Swapping:
+
+// If nums[mid] is 0:
+// Swap nums[mid] with nums[low] to move the 0 to its correct position.
+// Increment both low and mid because the swapped element at mid is already processed.
+// If nums[mid] is 2:
+// Swap nums[mid] with nums[high] to move the 2 to its correct position.
+// Decrement high because the swapped element at high is not yet processed, so we need to check the element now at mid again.
+// If nums[mid] is 1:
+// Simply increment mid because 1s are already in their correct positions in the middle.
+// This approach ensures that all 0s are at the beginning, all 1s are in the middle, and all 2s are at the end of the array, sorting the array in a single pass with O(n) time complexity and O(1) space complexity.

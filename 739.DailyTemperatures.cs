@@ -27,3 +27,19 @@ public class Solution {
         return res;
     }
 }
+
+public class Solution {
+    public int[] DailyTemperatures(int[] temperatures) {
+        int[] result = new int[temperatures.Length];
+        Stack<int> stack = new();
+        stack.Push(temperatures.Length-1);
+        for(int i = temperatures.Length - 2; i >= 0; i--){
+            while(stack.Any() && temperatures[i] >= temperatures[stack.Peek()])
+                stack.Pop();
+            if(stack.Any())
+                result[i] = stack.Peek() - i;
+            stack.Push(i);
+        }
+        return result;
+    }
+}
