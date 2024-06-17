@@ -27,52 +27,81 @@
 // lRUCache.get(3);    // return 3
 // lRUCache.get(4);    // return 4
 
-
-//
-public class LRUCache {
-private readonly int _capacity;
-    private readonly Dictionary<int, LinkedListNode<KeyValuePair<int, int>>> _cache;
-    private readonly LinkedList<KeyValuePair<int, int>> _lru;
-
-    public LRUCache(int capacity) 
-    {
-        _capacity = capacity;        
-        _cache = new();
-        _lru = new();
-    }
+//Using LinkList
+public class LRUCache
+{
+    // Define the capacity of the LRU Cache
+    private readonly int capacity;
     
-    public int Get(int key) 
-    {
-        if (!_cache.TryGetValue(key, out var node))
-        {
-            return -1;
-        }
-        
-        _lru.Remove(node);
-        _cache[key] = _lru.AddFirst(node.Value);
-        
-        return node.Value.Value;        
-    }
+    // Dictionary to store the cache items with key as the integer key and value as the LinkedListNode containing a tuple (key, value)
+    private readonly Dictionary<int, LinkedListNode<(int key, int value)>> cache;
     
-    public void Put(int key, int value) 
+    // LinkedList to maintain the order of usage, with the most recently used item at the front
+    private readonly LinkedList<(int key, int value)> lruList;
+
+    // Constructor to initialize the LRU Cache with a given capacity
+    public LRUCache(int capacity)
     {
-        if (_cache.TryGetValue(key, out var node))
+        this.capacity = capacity;
+        cache = new Dictionary<int, LinkedListNode<(int key, int value)>>();
+        lruList = new LinkedList<(int key, int value)>();
+    }
+
+    // Method to get the value associated with a key
+    public int Get(int key)
+    {
+        // Check if the key exists in the cache
+        if (cache.TryGetValue(key, out LinkedListNode<(int key, int value)> node))
         {
-            _lru.Remove(node);
-            _cache.Remove(key);
+            // If key exists, move the node to the front of the LinkedList (most recently used)
+            lruList.Remove(node);
+            lruList.AddFirst(node);
+            // Return the value associated with the key
+            return node.Value.value;
         }
-        
-        node = _lru.AddFirst(new KeyValuePair<int, int>(key, value));
-        _cache[key] = node;
-        
-        if (_lru.Count > _capacity)
+        // If key does not exist, return -1
+        return -1; // Key not found
+    }
+
+    // Method to put a key-value pair into the cache
+    public void Put(int key, int value)
+    {
+        // Check if the key already exists in the cache
+        if (cache.TryGetValue(key, out LinkedListNode<(int key, int value)> node))
         {
-            node = _lru.Last;            
-            _lru.RemoveLast();
-            _cache.Remove(node.Value.Key);            
+            // If key exists, remove the node from its current position
+            lruList.Remove(node);
+            // Update the value of the node
+            node.Value = (key, value);
+            // Add the node to the front of the LinkedList (most recently used)
+            lruList.AddFirst(node);
+        }
+        else
+        {
+            // If key does not exist and cache is at full capacity
+            if (cache.Count >= capacity)
+            {
+                // Remove the least recently used item from the LinkedList and the cache
+                var lruNode = lruList.Last;
+                lruList.RemoveLast();
+                cache.Remove(lruNode.Value.key);
+            }
+            // Create a new node for the key-value pair
+            var newNode = new LinkedListNode<(int key, int value)>((key, value));
+            // Add the new node to the front of the LinkedList (most recently used)
+            lruList.AddFirst(newNode);
+            // Add the new node to the cache
+            cache[key] = newNode;
         }
     }
 }
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.Get(key);
+ * obj.Put(key,value);
+ */
 
 //self defined DLL
 public class LRUCache {
