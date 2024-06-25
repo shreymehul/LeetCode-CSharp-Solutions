@@ -42,3 +42,27 @@ public class Solution {
         return root;
     }
 }
+
+
+public class Solution {
+    int sum;
+    public TreeNode BstToGst(TreeNode root) {
+        sum = DFSSum(root);
+        ConvertToGST(root);
+        return root;
+    }
+    private void ConvertToGST(TreeNode root){
+        if(root == null)
+            return;
+        ConvertToGST(root.left);
+        int val = root.val;
+        root.val = sum;
+        sum -= val;
+        ConvertToGST(root.right);
+    } 
+    private int DFSSum(TreeNode root) {
+        if(root == null)
+            return 0;
+        return root.val + DFSSum(root.left) + DFSSum(root.right);
+    }
+}
