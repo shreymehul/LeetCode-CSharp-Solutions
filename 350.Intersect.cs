@@ -34,3 +34,33 @@ public class Solution {
         return res.ToArray();
     }
 }
+
+public class Solution {
+    public int[] Intersect(int[] nums1, int[] nums2) {
+        Dictionary<int,int> map1 = new();
+        Dictionary<int,int> map2 = new();
+        foreach(int num in nums1){
+            if(map1.ContainsKey(num))
+                map1[num]++;
+            else
+                map1[num] = 1;
+        }
+        foreach(int num in nums2){
+            if(map2.ContainsKey(num))
+                map2[num]++;
+            else
+                map2[num] = 1;
+        }
+        List<int> result = new();
+        foreach(var item in map1){
+            if(map2.ContainsKey(item.Key)){
+                int min = Math.Min(item.Value, map2[item.Key]);
+                while(min>0){
+                    result.Add(item.Key);
+                    min--;
+                }
+            }
+        }
+        return result.ToArray();
+    }
+}
