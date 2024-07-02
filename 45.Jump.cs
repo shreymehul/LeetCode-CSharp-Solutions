@@ -19,6 +19,25 @@
 
 public class Solution {
     public int Jump(int[] nums) {
+        int currPos = 0;
+        int jump = 0;
+        int maxReach = 0;
+        for(int i = 0; i < nums.Length; i++){
+            if(currPos >= nums.Length -1) break;
+
+            maxReach = Math.Max(maxReach, i + nums[i]);
+            
+            if(currPos == i){
+                currPos = maxReach;
+                jump++;
+            }
+        }
+        return jump;
+    }
+}
+
+public class Solution {
+    public int Jump(int[] nums) {
         if(nums.Length == 1)
             return 0;
         if(nums[0] == 0)

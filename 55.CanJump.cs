@@ -13,6 +13,18 @@
 // Output: false
 // Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
 
+
+public class Solution {
+    public bool CanJump(int[] nums) {
+        int currPos = 0;
+        for(int i = 0; i < nums.Length; i++){
+            if(currPos < i) return false;
+            currPos = Math.Max(currPos, i + nums[i]);
+        }
+        return true;
+    }
+}
+
 public class Solution {
     public bool CanJump(int[] nums) {
         if(nums.Length == 1)
