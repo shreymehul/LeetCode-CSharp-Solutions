@@ -31,18 +31,18 @@ public class Solution {
         int[] freq = new int[95];
         int left,right;
         left = 0;
-        right =0;
+        right =0 ;
         int max = 0;
         while(right<s.Length){
             if(freq[s[right] - ' '] == 0){
                 freq[s[right] - ' '] ++;
             }
             else{
-                while(left < right && freq[s[right] - ' '] !=0){
+                while(left < right && freq[s[right] - ' '] != 0){
                     freq[s[left] - ' '] --;
                     left++;
                 }
-                freq[s[right] - ' '] ++;
+                freq[s[right] - ' ']++;
             }
             right++;
             max = Math.Max(max, (right-left));

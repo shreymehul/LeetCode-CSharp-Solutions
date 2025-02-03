@@ -23,3 +23,60 @@ public class Solution
         return pre;
     }
 }
+
+//Trie
+public class Solution
+{
+    public string LongestCommonPrefix(string[] strs)
+    {
+        if (strs == null || strs.Length == 0)
+            return "";
+
+        Trie root = new();
+        foreach (var word in strs)
+            root.Insert(word);
+
+        return root.LongestPrefix();
+    }
+
+    public class Trie
+    {
+        private bool isEndOfWord;
+        private readonly Dictionary<char, Trie> children;
+
+        public Trie()
+        {
+            children = new Dictionary<char, Trie>();
+            isEndOfWord = false;
+        }
+
+        public void Insert(string word)
+        {
+            var current = this;
+            foreach (char c in word)
+            {
+                if (!current.children.ContainsKey(c))
+                    current.children[c] = new Trie();
+
+                current = current.children[c];
+            }
+            current.isEndOfWord = true;
+        }
+
+        public string LongestPrefix()
+        {
+            var prefix = new System.Text.StringBuilder();
+            var current = this;
+
+            while (current.children.Count == 1 && !current.isEndOfWord)
+            {
+                foreach (var child in current.children) // Always 1 child
+                {
+                    prefix.Append(child.Key);
+                    current = child.Value;
+                }
+            }
+            return prefix.ToString();
+        }
+    }
+}

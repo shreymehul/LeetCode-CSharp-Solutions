@@ -41,3 +41,35 @@ public class Solution {
         }
     }
 }
+
+public class Solution
+{
+    public IList<IList<int>> CombinationSum(int[] candidates, int target)
+    {
+        IList<IList<int>> result = new List<IList<int>>();
+        FindCombinations(candidates, target, 0, new List<int>(), result);
+        return result;
+    }
+
+    private void FindCombinations(int[] candidates, int target, int index,
+                             List<int> current, IList<IList<int>> result)
+    {
+        if (target == 0)
+        {
+            result.Add(new List<int>(current)); // Found a valid combination
+            return;
+        }
+
+        if (target < 0 || index >= candidates.Length)
+            return;
+
+        // Include current candidate
+        current.Add(candidates[index]);
+        FindCombinations(candidates, target - candidates[index], index,
+                         current, result); // Use same element
+        current.RemoveAt(current.Count - 1);
+
+        // Exclude current candidate and move to next
+        FindCombinations(candidates, target, index + 1, current, result);
+    }
+}

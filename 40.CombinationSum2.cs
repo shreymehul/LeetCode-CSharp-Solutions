@@ -44,3 +44,39 @@ public class Solution {
         }
     }
 }
+
+public class Solution {
+    public IList<IList<int>> CombinationSum2(int[] candidates, int target) {
+       Array.Sort(candidates); // Sort to handle duplicates easily
+        IList<IList<int>> result = new List<IList<int>>();
+        Backtrack(candidates, target, 0, new List<int>(), result);
+        return result;
+    }
+
+    private void Backtrack(int[] candidates, int target, int index, 
+                        List<int> current, IList<IList<int>> result)
+    {
+        if (target == 0)
+        {
+            result.Add(new List<int>(current));
+            return;
+        }
+
+        for (int i = index; i < candidates.Length; i++)
+        {
+            // Skip duplicates
+            if (i > index && candidates[i] == candidates[i - 1])
+                continue;
+
+            // Stop further exploration if the current candidate is greater than the target
+            if (candidates[i] > target)
+                break;
+
+            // Include the candidate and move forward
+            current.Add(candidates[i]);
+            Backtrack(candidates, target - candidates[i], i + 1, 
+                            current, result);
+            current.RemoveAt(current.Count - 1); // Undo the choice
+        }
+    }
+}

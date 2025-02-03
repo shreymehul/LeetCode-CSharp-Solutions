@@ -49,27 +49,27 @@ public class Solution {
 public class Solution {
     public int MinPathSum(int[][] grid) {
         int m = grid.Length;
-    int n = grid[0].Length;
-    
-    // Initialise bottom-right corner
-    int[,] dp = new int[m, n];
-    dp[m-1, n-1] = grid[m-1][n-1];
-    
-    // Initialise bottom row and right column
-    for (int i = m-2; i >= 0; i--) {
-        dp[i, n-1] = dp[i+1, n-1] + grid[i][n-1];
-    }
-    for (int j = n-2; j >= 0; j--) {
-        dp[m-1, j] = dp[m-1, j+1] + grid[m-1][j];
-    }
-    
-    // Compute minimum path sum for each cell
-    for (int i = m-2; i >= 0; i--) {
-        for (int j = n-2; j >= 0; j--) {
-            dp[i, j] = grid[i][j] + Math.Min(dp[i+1, j], dp[i, j+1]);
+        int n = grid[0].Length;
+        
+        // Initialise bottom-right corner
+        int[,] dp = new int[m, n];
+        dp[m-1, n-1] = grid[m-1][n-1];
+        
+        // Initialise bottom row and right column
+        for (int i = m-2; i >= 0; i--) {
+            dp[i, n-1] = dp[i+1, n-1] + grid[i][n-1];
         }
-    }
-    
-    return dp[0, 0];
+        for (int j = n-2; j >= 0; j--) {
+            dp[m-1, j] = dp[m-1, j+1] + grid[m-1][j];
+        }
+        
+        // Compute minimum path sum for each cell
+        for (int i = m-2; i >= 0; i--) {
+            for (int j = n-2; j >= 0; j--) {
+                dp[i, j] = grid[i][j] + Math.Min(dp[i+1, j], dp[i, j+1]);
+            }
+        }
+        
+        return dp[0, 0];
     }
 }
