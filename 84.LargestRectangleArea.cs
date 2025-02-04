@@ -54,3 +54,42 @@ public class Solution {
     
     }
 }
+
+
+public class Solution {
+    public int LargestRectangleArea(int[] heights)
+    {
+        // Edge case: if heights array is empty or null
+        if (heights == null || heights.Length == 0)
+            return 0;
+
+        // Stack to store indices of histogram bars
+        Stack<int> stack = new Stack<int>();
+        int maxArea = 0;
+
+        // Traverse all bars and an extra iteration to process remaining stack
+        for (int i = 0; i <= heights.Length; i++)
+        {
+            // Handle the final case where we treat the "last" height as 0
+            int currentHeight = (i == heights.Length) ? 0 : heights[i];
+
+            // Maintain a non-decreasing height stack; calculate area for taller bars
+            while (stack.Count > 0 && currentHeight < heights[stack.Peek()])
+            {
+                // Pop the top element which represents the height of a rectangle
+                int height = heights[stack.Pop()];
+
+                // Calculate the width of the rectangle
+                int width = stack.Count == 0 ? i : i - stack.Peek() - 1;
+
+                // Update max area if a larger rectangle is found
+                maxArea = Math.Max(maxArea, height * width);
+            }
+
+            // Push the current bar's index onto the stack
+            stack.Push(i);
+        }
+
+        return maxArea;
+    }
+}

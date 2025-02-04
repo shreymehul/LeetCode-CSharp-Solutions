@@ -46,7 +46,7 @@ public class Solution {
                 level.Add(currNode.val);
                 if (currNode.right != null)
                     queue.Enqueue(currNode.right);
-                    if (currNode.left != null)
+                if (currNode.left != null)
                     queue.Enqueue(currNode.left);
             }
             res.Add(level);
