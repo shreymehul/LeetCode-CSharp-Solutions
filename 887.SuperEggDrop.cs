@@ -1,7 +1,9 @@
 // 887. Super Egg Drop
 // You are given k identical eggs and you have access to a building with n floors labeled from 1 to n.
-// You know that there exists a floor f where 0 <= f <= n such that any egg dropped at a floor higher than f will break, and any egg dropped at or below floor f will not break.
-// Each move, you may take an unbroken egg and drop it from any floor x (where 1 <= x <= n). If the egg breaks, you can no longer use it. However, if the egg does not break, you may reuse it in future moves.
+// You know that there exists a floor f where 0 <= f <= n such that any egg dropped at a floor higher than f will break,
+// and any egg dropped at or below floor f will not break.
+// Each move, you may take an unbroken egg and drop it from any floor x (where 1 <= x <= n). If the egg breaks, you can no
+// longer use it. However, if the egg does not break, you may reuse it in future moves.
 // Return the minimum number of moves that you need to determine with certainty what the value of f is.
 
 // Example 1:
@@ -31,18 +33,22 @@ public class Solution {
         // with i moves and j eggs
         int[,] dp = new int[n+1, k+1];
 
-        // Iterate over the number of moves
+        // Iterate over the number of floors
         for (int i = 1; i <= n; i++) {
             // Iterate over the number of eggs
             for (int j = 1; j <= k; j++) {
                 if (i == 1) {
                     // If there's only one move, only one trial is needed
+                    // for 1st floor we need only one move
                     dp[i, j] = 1;
                 } else if (j == 1) {
                     // If there's only one egg, trials equal to floors because we can only drop from each floor sequentially
                     dp[i, j] = i;
                 } else {
                     // Use the formula to fill in the array
+                    // Break: Previous floor, with one less egg
+                    // Survive: Previous floor with same eggs
+                    // plus 1 more move at current state
                     // dp[i-1,j-1] + dp[i-1,j] + 1
                     dp[i, j] = dp[i - 1, j - 1] + dp[i - 1, j] + 1;
                 }
