@@ -5,6 +5,39 @@
 // position.
 // Return the max sliding window.
 
+//Optimised
+using System.Collections.Generic;
+
+public class Solution {
+    public int[] MaxSlidingWindow(int[] nums, int k) {
+        if (nums == null || nums.Length == 0) return new int[0];
+        
+        int n = nums.Length;
+        int[] res = new int[n - k + 1];
+        LinkedList<int> deque = new LinkedList<int>(); // Stores indices of elements
+
+        for (int i = 0; i < nums.Length; i++) {
+            // Remove elements out of the current window
+            if (deque.Count > 0 && deque.First.Value <= i - k)
+                deque.RemoveFirst();
+
+            // Remove all elements smaller than the current element from the back
+            while (deque.Count > 0 && nums[deque.Last.Value] <= nums[i])
+                deque.RemoveLast();
+
+            // Add the current element at the back of the deque
+            deque.AddLast(i);
+
+            // Set the result for the current window
+            if (i >= k - 1)
+                res[i - k + 1] = nums[deque.First.Value];
+        }
+
+        return res;
+    }
+}
+
+
 //Deque implementation via List
 public class Solution {
     public int[] MaxSlidingWindow(int[] nums, int k) {
