@@ -44,6 +44,62 @@ public class Solution {
     }
 }
 
+//Approch: Binary Search
+public class Solution {
+    public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.Length, n = nums2.Length;
+
+        // Ensure nums1 is the smaller array to minimize binary search operations
+        if (m > n) return FindMedianSortedArrays(nums2, nums1);
+
+        int left = 0, right = m;
+        int totalLeft = (m + n + 1) / 2;  // Partition point to balance the two sides
+
+        while (left <= right) {
+            // Binary search partition for nums1
+            int partition1 = (left + right) / 2;
+            
+            // Corresponding partition for nums2 to balance totalLeft
+            int partition2 = totalLeft - partition1;
+
+            // Handle edge cases where partition is out of bounds
+            int maxLeft1 = (partition1 == 0) ? 
+                            int.MinValue : nums1[partition1 - 1];
+            int minRight1 = (partition1 == m) ? 
+                            int.MaxValue : nums1[partition1];
+
+            int maxLeft2 = (partition2 == 0) ? 
+                            int.MinValue : nums2[partition2 - 1];
+            int minRight2 = (partition2 == n) ? 
+                            int.MaxValue : nums2[partition2];
+
+            // Check if valid partition is found
+            if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
+                // If total length is even, take average of two middle elements
+                if ((m + n) % 2 == 0) {
+                    return (Math.Max(maxLeft1, maxLeft2) 
+                            + Math.Min(minRight1, minRight2)) / 2.0;
+                } else {
+                    // If total length is odd, return the max of left partition
+                    return Math.Max(maxLeft1, maxLeft2);
+                }
+            } 
+            // Shift partition to the left if nums1's left part is too large
+            else if (maxLeft1 > minRight2) {
+                right = partition1 - 1;
+            } 
+            // Shift partition to the right if nums2's left part is too large
+            else {
+                left = partition1 + 1;
+            }
+        }
+
+        // This case should never be reached if inputs are valid and sorted
+        throw new ArgumentException("Input arrays are not sorted");
+    }
+}
+
+
 
 public class Solution {
     //intuition: We can solve this problem by finding the kth element in the merged array.
