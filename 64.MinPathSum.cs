@@ -29,15 +29,20 @@ public class Solution {
     }
     public int PathSum(int[][] grid, int i, int j)
     {
+        // already visited
         if (visited[i, j] > -1)
             return visited[i, j];
         int result;
+        // reached destination
         if (i == grid.Length - 1 && j == grid[0].Length - 1)
             result = grid[i][j];
+        //Last Row    
         else if (i == grid.Length - 1)
             result =  grid[i][j] + PathSum(grid, i, j + 1);
+        //Last Column
         else if (j == grid[0].Length - 1)
             result = grid[i][j] + PathSum(grid, i + 1, j);
+        //All others
         else
             result =  grid[i][j] + Math.Min(PathSum(grid, i+1, j), PathSum(grid, i, j + 1));
         visited[i,j] = result;

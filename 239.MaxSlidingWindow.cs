@@ -13,7 +13,7 @@ public class Solution {
         if (nums == null || nums.Length == 0) return new int[0];
         
         int n = nums.Length;
-        int[] res = new int[n - k + 1];
+        int[] res = new int[n - k + 1]; // steores result i.e. max of k wincow
         LinkedList<int> deque = new LinkedList<int>(); // Stores indices of elements
 
         for (int i = 0; i < nums.Length; i++) {

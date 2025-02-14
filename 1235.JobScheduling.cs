@@ -30,6 +30,9 @@ public class Solution
         int n = profit.Length;
         maxProfit = new int[n];
 
+        // Initialize max profit array with -1 for memoization
+        Array.Fill(maxProfit, -1);
+
         // Create job tuples containing start, end times, and profit
         (int start, int end, int profit)[] jobs = new (int, int, int)[n];
         for (int i = 0; i < n; i++) 
@@ -40,9 +43,6 @@ public class Solution
         // Sort jobs by their start time to facilitate recursive exploration
         jobs = jobs.OrderBy(x => x.start).ToArray();
         
-        // Initialize max profit array with -1 for memoization
-        Array.Fill(maxProfit, -1);
-
         return Scheduling(jobs, 0, 0);
     }
 

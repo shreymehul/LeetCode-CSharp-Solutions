@@ -47,9 +47,11 @@ public class Solution {
         TreeNode left = LowestCommonAncestor(root.left, p, q);
         TreeNode right = LowestCommonAncestor(root.right, p, q);
 
+        //one node is in left and one in right
         if(left != null && right != null)
             return root;
         
+        //both the node are in one side of tree.
         return right ?? left;
     }
 }

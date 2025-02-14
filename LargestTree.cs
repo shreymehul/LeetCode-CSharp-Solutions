@@ -31,6 +31,8 @@
 // Result Selection:
 
 // After merging, the tree with the largest size is selected. In case of ties, the smallest root ID is chosen.
+
+
 // Complexity Analysis:
 // Time Complexity: O(NlogN) due to efficient path compression and union operations.
 // Space Complexity: O(N) for the parent and size dictionaries.

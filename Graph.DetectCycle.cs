@@ -1,4 +1,3 @@
-
 // DFS
 public class Solution {
     public void DetectCycle(int[][] edges, int n) {
