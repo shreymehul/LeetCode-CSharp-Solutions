@@ -20,18 +20,43 @@
 // Output: 11
 // Explanation: The original array was [11,13,15,17] and it was rotated 4 times. 
 
+
 public class Solution {
     public int FindMin(int[] nums) {
+        int left = 0, right = nums.Length - 1;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] < nums[right]) {
+                right = mid;
+            } else if (nums[mid] > nums[right]) {
+                left = mid + 1;
+            } else {
+                // nums[mid] == nums[right] -> cannot determine the sorted half
+                right--;
+            }
+        }
+
+        return nums[left];
+    }
+}
+
+public class Solution
+{
+    public int FindMin(int[] nums)
+    {
         int left = 0,
-            right = nums.Length-1;
-        while(left < right){
-            if(nums[left] < nums[right])
+            right = nums.Length - 1;
+        while (left < right)
+        {
+            if (nums[left] < nums[right])
                 return nums[left];
-            int mid = (right - left)/2 + left;
-            if(nums[mid] < nums[left])
+            int mid = (right - left) / 2 + left;
+            if (nums[mid] < nums[left])
                 right = mid;
             else
-                left = mid+1;
+                left = mid + 1;
         }
         return nums[left];
     }
