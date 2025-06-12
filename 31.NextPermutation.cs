@@ -56,36 +56,9 @@ public class Solution {
     }
 }
 
-public class Solution {
-    public void NextPermutation(int[] nums) {
-        int idx1 = -1;
-            int n = nums.Length;
-            for (int i = n - 1; i > 0; i--)
-            {
-                if (nums[i] > nums[i - 1])
-                {
-                    idx1 = i;
-                    break;
-                }
-            }
-            if (idx1 != -1)
-            {
-                int idx2 = idx1;
-                for (int i = idx1 + 1; i < n; i++)
-                {
-                    if (nums[i] > nums[idx1-1] && nums[i] <= nums[idx2])
-                    {
-                        idx2 = i;
-                    }
-                }
-                int t = nums[idx1-1];
-                nums[idx1-1] = nums[idx2];
-                nums[idx2] = t;
-                Array.Reverse(nums, idx1, n - idx1);
-            }
-            else
-            {
-                Array.Reverse(nums);
-            }
-    }
-}
+// Intuition: To get the next permutation:
+// 1. Find the first pair from the end where nums[i] > nums[i-1]. Let’s call index i-1 as the pivot. 
+//    This means we found a position where we can make a change to get a bigger number.
+// 2. Find the smallest number greater than nums[i-1] on the right side (i.e., the next higher digit).
+// 3. Swap this number with nums[i-1].
+// 4. Reverse the part of the array after index i-1 to get the smallest lexicographical order.

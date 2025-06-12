@@ -20,46 +20,48 @@
 
 //Detect Cycle | Deadlock
 public class Solution {
-	
-    int[] Visited = new int[2000];
-	//unprocessed ->0
-	//processed ->1
-	//processing ->2
-    public bool CanFinish(int numCourses, int[][] prerequisites)
-    {
-        List<int>[] path = new List<int>[numCourses];
-        //initialise List
-        for(int i = 0; i < numCourses; i++)
-        {
-            path[i] = new List<int>();
+    public bool CanFinish(int numCourses, int[][] prerequisites) {
+        // Graph represented as adjacency list
+        List<int>[] graph = new List<int>[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            graph[i] = new List<int>();
         }
-        //Add nbr
-        foreach(var item in prerequisites)
-        {
-            path[item[0]].Add(item[1]);
+
+        // Build the graph (reverse edges: course → prerequisite)
+        foreach (var pair in prerequisites) {
+            int course = pair[0];
+            int prerequisite = pair[1];
+            graph[course].Add(prerequisite);
         }
-        for(int i = 0; i < numCourses; i++)
-        {
-            if (Visited[i] == 0)
-            {
-                if (IsCycle(i, path))
-                    return false;
+
+        // Status array: 0 = unvisited, 1 = visited, 2 = visiting
+        int[] status = new int[numCourses];
+
+        // Perform DFS for each course
+        for (int i = 0; i < numCourses; i++) {
+            if (status[i] == 0) {
+                if (HasCycle(i, graph, status)) {
+                    return false; // Cycle detected → can't finish all courses
+                }
             }
         }
-        return true;
+
+        return true; // No cycles found → possible to finish all courses
     }
-    public bool IsCycle(int Vertice, List<int>[] path)
-    {
-        if (Visited[Vertice] == 2)
-            return true;
-        Visited[Vertice] = 2;
-        foreach(var item in path[Vertice])
-        {
-            if (Visited[item] != 1)
-                if (IsCycle(item, path))
-                    return true;
+
+    private bool HasCycle(int course, List<int>[] graph, int[] status) {
+        if (status[course] == 2) return true;  // Found a back edge → cycle exists
+        if (status[course] == 1) return false; // Already processed → no cycle
+
+        status[course] = 2; // Mark as visiting
+
+        foreach (var neighbor in graph[course]) {
+            if (HasCycle(neighbor, graph, status)) {
+                return true; // Cycle found in recursion
+            }
         }
-        Visited[Vertice] = 1;
+
+        status[course] = 1; // Mark as visited
         return false;
     }
 }

@@ -12,7 +12,8 @@
 
 // Input: root = [1]
 // Output: [1]
-// /**
+
+/**
  * Definition for a binary tree node.
  * public class TreeNode {
  *     public int val;
@@ -25,15 +26,17 @@
  *     }
  * }
  */
-public class Solution {
+public class Solution
+{
     IList<int> result = new List<int>();
-    public IList<int> PostorderTraversal(TreeNode root) {
-        if(root == null)
+    public IList<int> PostorderTraversal(TreeNode root)
+    {
+        if (root == null)
             return result;
         PostorderTraversal(root.left);
         PostorderTraversal(root.right);
         result.Add(root.val);
-        
+
         return result;
     }
 }

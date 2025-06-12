@@ -23,21 +23,24 @@
 // 3. Down -> Right -> Down
 
 //TLE
-public class Solution {
-    public int UniquePaths(int m, int n) {
-        return CountUniquePath(0,0,m,n);
+public class Solution
+{
+    public int UniquePaths(int m, int n)
+    {
+        return CountUniquePath(0, 0, m, n);
     }
-    public int CountUniquePath(int i, int j, int m, int n ){
-        if(i == m-1 && j == n-1)
+    public int CountUniquePath(int i, int j, int m, int n)
+    {
+        if (i == m - 1 && j == n - 1)
             return 1;
-        if(i >= m || j>= n)
+        if (i >= m || j >= n)
             return 0;
         //count path from adjacent cells
-        return CountUniquePath(i+1,j,m,n) + CountUniquePath(i,j+1,m,n);
+        return CountUniquePath(i + 1, j, m, n) + CountUniquePath(i, j + 1, m, n);
     }
 }
-//with DP
 
+//with DP
 public class Solution {
     int[,] dp;
     public int UniquePaths(int m, int n) {

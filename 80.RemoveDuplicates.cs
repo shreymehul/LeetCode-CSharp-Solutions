@@ -1,5 +1,5 @@
 // 80. Remove Duplicates from Sorted Array II
-    // Given an integer array nums sorted in non-decreasing order, remove some duplicates in-place such that each unique element appears at most twice. The relative order of the elements should be kept the same.
+// Given an integer array nums sorted in non-decreasing order, remove some duplicates in-place such that each unique element appears at most twice. The relative order of the elements should be kept the same.
 
 // Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. It does not matter what you leave beyond the first k elements.
 
@@ -39,14 +39,18 @@
 // nums is sorted in non-decreasing order.
 
 
-public class Solution {
-    public int RemoveDuplicates(int[] nums) {
+public class Solution
+{
+    public int RemoveDuplicates(int[] nums)
+    {
         if (nums.Length <= 2) return nums.Length;
 
         int i = 2; // First two elements always allowed
 
-        for (int j = 2; j < nums.Length; j++) {
-            if (nums[j] != nums[i - 2]) {
+        for (int j = 2; j < nums.Length; j++)
+        {
+            if (nums[j] != nums[i - 2])
+            {
                 nums[i] = nums[j];
                 i++;
             }

@@ -23,53 +23,49 @@
 
 //Detect Cycle  & Reverse Topological Sort
 public class Solution {
-    Stack<int> stack = new Stack<int>();
-    int[] Process = new int[2000];
-    //unprocessed ->0
-	//processed ->1
-	//processing ->2
-    public int[] FindOrder(int numCourses, int[][] prerequisites)
-    {
-        List<int>[] path = new List<int>[numCourses];
+    public int[] FindOrder(int numCourses, int[][] prerequisites) {
+        // Adjacency list for graph representation
+        List<int>[] graph = new List<int>[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            graph[i] = new List<int>();
+        }
 
-        for (int i = 0; i < numCourses; i++)
-        {
-            path[i] = new List<int>();
+        // Build the graph: prereq → course
+        foreach (var pair in prerequisites) {
+            int course = pair[0];
+            int prereq = pair[1];
+            graph[course].Add(prereq);
         }
-        foreach (var item in prerequisites)
-        {
-            path[item[0]].Add(item[1]);
-        }
-         
-        for (int i = 0; i < numCourses; i++)
-        {
-            if(Process[i] == 0)
-            {
-                if (IsCycleAndTopologicalSort(i, path))
-                    return new int[0];
+
+        int[] state = new int[numCourses];  // 0 = unvisited, 1 = visited, 2 = visiting
+        Stack<int> stack = new Stack<int>();
+
+        for (int i = 0; i < numCourses; i++) {
+            if (state[i] == 0) {
+                if (HasCycle(i, graph, state, stack)) {
+                    return new int[0]; // Return empty if a cycle is found
+                }
             }
         }
-        int[] result = new int[numCourses];
-        for(int i = numCourses-1; i >=0; i--)
-        {
-            result[i] = stack.Pop();
-        }
-        return result;
-    }
-    public bool IsCycleAndTopologicalSort(int Vertice, List<int>[] path)
-    {
-        if (Process[Vertice] == 2)
-            return true;
-        Process[Vertice] = 2;
-        foreach (var item in path[Vertice])
-        {
-            if (Process[item] != 1)
-                if (IsCycleAndTopologicalSort(item, path))
-                    return true;
-        }
-        Process[Vertice] = 1;
-        stack.Push(Vertice);
 
+        // Reverse the stack to get correct course order
+        return stack.Reverse().ToArray();
+    }
+
+    private bool HasCycle(int node, List<int>[] graph, int[] state, Stack<int> stack) {
+        if (state[node] == 2) return true;   // Cycle detected
+        if (state[node] == 1) return false;  // Already visited
+
+        state[node] = 2; // Mark as visiting
+
+        foreach (var neighbor in graph[node]) {
+            if (HasCycle(neighbor, graph, state, stack)) {
+                return true;
+            }
+        }
+
+        state[node] = 1;     // Mark as visited
+        stack.Push(node);    // Post-order push
         return false;
     }
 }

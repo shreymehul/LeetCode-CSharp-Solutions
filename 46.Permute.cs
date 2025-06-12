@@ -12,29 +12,58 @@
 // Input: nums = [1]
 // Output: [[1]]
 
-public class Solution {
-    
-    public IList<IList<int>> Permute(int[] nums) {
+public class Solution
+{
+
+    public IList<IList<int>> Permute(int[] nums)
+    {
         List<int> permut = new List<int>();
         List<int> lnums = new List<int>(nums);
         IList<IList<int>> result = new List<IList<int>>();
-        FindPermutaion(lnums,permut,result);
+        FindPermutaion(lnums, permut, result);
         return result;
     }
     public void FindPermutaion
-        (IList<int> nums, IList<int> permut, IList<IList<int>> result){
-        
-        if(nums.Count == 0){
+        (IList<int> nums, IList<int> permut, IList<IList<int>> result)
+    {
+
+        if (nums.Count == 0)
+        {
             result.Add(new List<int>(permut));
         }
-        
-        for(int i = 0; i < nums.Count; i++){
+
+        for (int i = 0; i < nums.Count; i++)
+        {
             IList<int> temp = new List<int>(nums);
             permut.Add(nums[i]);
             //remove used number
             temp.RemoveAt(i);
-            FindPermutaion(temp,permut,result);
+            FindPermutaion(temp, permut, result);
             permut.Remove(nums[i]);
         }
+    }
+}
+
+public class Solution {
+    public IList<IList<int>> Permute(int[] nums) {
+        IList<IList<int>> result = new List<IList<int>>();
+        Permute(nums, result, new List<int>(), new bool[nums.Length]);
+        return result;
+    }
+    public void Permute(int[] nums, IList<IList<int>> result, IList<int> subset, 
+        bool[] used){
+        if(subset.Count == nums.Length){
+            result.Add(new List<int>(subset));
+        }
+        for(int i = 0; i < nums.Length; i++){
+            if(!used[i]){
+                used[i] = true;
+                subset.Add(nums[i]);
+                Permute(nums, result, subset, used);
+                used[i] = false;
+                subset.RemoveAt(subset.Count -1);
+            }
+        }
+    
     }
 }

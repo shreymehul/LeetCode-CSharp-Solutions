@@ -15,35 +15,38 @@
 // Input: s = "101023"
 // Output: ["1.0.10.23","1.0.102.3","10.1.0.23","10.10.2.3","101.0.2.3"]
 
-public IList<string> RestoreIpAddresses(string s)
+public class Solution
 {
-    IList<string> result = new List<string>();
-    string ip = "";
-    //Though there are 3 loops, entire string will be iterated 3*3*3 i.e 27 times only.
-    for (int i = 1; i < 4; i++)
+    public IList<string> RestoreIpAddresses(string s)
     {
-        for (int j = 1; j < 4; j++)
+        IList<string> result = new List<string>();
+        string ip = "";
+        //Though there are 3 loops, entire string will be iterated 3*3*3 i.e 27 times only.
+        for (int i = 1; i < 4; i++)
         {
-            for (int k = 1; k < 4; k++)
+            for (int j = 1; j < 4; j++)
             {
-                if (i + j + k < s.Length) //to ensure size of D is atleast 1
+                for (int k = 1; k < 4; k++)
                 {
-                    //Converting in int first will ensure each part has maximum onr 0's.
-                    int A = Int32.Parse(s.Substring(0, i));
-                    int B = Int32.Parse(s.Substring(i, j));
-                    int C = Int32.Parse(s.Substring(i + j, k));
-                    long D = Int64.Parse(s.Substring(i + j + k, s.Length - (i + j + k))); //making it long as last part value make exceed 32 bits.
-                    if (A <= 255 && B <= 255 &&
-                        C <= 255 && D <= 255)
+                    if (i + j + k < s.Length) //to ensure size of D is atleast 1
                     {
-                        ip = A + "." + B + "." + C + "." + D;
-                        //re-checking length as in case of multiple 0's in single part, length will get reduced, and this value should be droped;
-                        if (ip.Length == s.Length + 3) 
-                            result.Add(ip);
+                        //Converting in int first will ensure each part has maximum onr 0's.
+                        int A = Int32.Parse(s.Substring(0, i));
+                        int B = Int32.Parse(s.Substring(i, j));
+                        int C = Int32.Parse(s.Substring(i + j, k));
+                        long D = Int64.Parse(s.Substring(i + j + k, s.Length - (i + j + k))); //making it long as last part value make exceed 32 bits.
+                        if (A <= 255 && B <= 255 &&
+                            C <= 255 && D <= 255)
+                        {
+                            ip = A + "." + B + "." + C + "." + D;
+                            //re-checking length as in case of multiple 0's in single part, length will get reduced, and this value should be droped;
+                            if (ip.Length == s.Length + 3)
+                                result.Add(ip);
+                        }
                     }
                 }
             }
         }
+        return result;
     }
-    return result;
 }

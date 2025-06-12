@@ -30,9 +30,7 @@ public class Solution {
     public IList<IList<int>> LevelOrder(TreeNode root) {
         IList<IList<int>> res = new List<IList<int>>();
         if (root == null)
-        {
-        return res;
-        }
+            return res;
 
         Queue<TreeNode> queue = new Queue<TreeNode>();
             queue.Enqueue(root);
